@@ -1,4 +1,4 @@
-#Analysis for the Mconlearning paper
+#Analysis for the Mcoglearning paper
 #2026-11-sb
 
 # Load necessary library
@@ -26,7 +26,7 @@ library(parameters)
 library(haven)
 
 #Path
-setwd("/safe/data/Buratti/Mconlearning/data")
+setwd("/safe/data/Buratti/Mcoglearning/data")
 
 #Reading
 survey <- read.csv("surveycleaned-260401-n5363.csv")
