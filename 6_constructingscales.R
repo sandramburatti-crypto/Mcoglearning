@@ -12,6 +12,31 @@ score_mean <- function(survey, vars, min_answered) {
 
 
 #####################
+#Learning competency
+######################
+verbal_items <- c("QSS37_1","QSS37_2","QSS37_3")
+numerical_items <- c("QSS37_4","QSS37_5","QSS37_6")
+logical_items <- c("QSS37_7","QSS37_8","QSS37_9")
+mechanical_items <- c("QSS37_10","QSS37_11","QSS37_12")
+technical_items <- c("QSS37_13","QSS37_14","QSS37_15")
+motoric_items <- c("QSS37_16","QSS37_17","QSS37_18")
+
+theoretical_items <- c(verbal_items, numerical_items ,logical_items)
+practical_items <- c(mechanical_items, technical_items, motoric_items)
+
+survey$cverbal <- score_mean(survey, verbal_items, min_answered = 2)
+survey$cnumerical <- score_mean(survey, numerical_items, min_answered = 2)
+survey$clogical <- score_mean(survey, logical_items, min_answered = 2)
+survey$cmechanical <- score_mean(survey, mechanical_items, min_answered = 2)
+survey$cdigital <- score_mean(survey, technical_items, min_answered = 2)
+survey$cmotoric <- score_mean(survey, motoric_items, min_answered = 2)
+
+survey$ctheoretical <- score_mean(survey, theoretical_items, min_answered = 6)
+survey$cpractical <- score_mean(survey, practical_items, min_answered = 6)
+
+
+
+#####################
 #Achievement motives scale
 #######################
 
