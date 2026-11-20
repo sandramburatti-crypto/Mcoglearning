@@ -121,7 +121,7 @@ cat("Menyuppgift: personer =", n_distinct(food_long$id),
     ", observationer =", nrow(food_long), "\n")
 
 # Anpassa sökvägen om skriptet körs utanför er säkra analysmiljö.
-output_dir <- "/safe/data/Buratti/Mconlearning/data"
+output_dir <- "/safe/data/Buratti/Mcoglearning/data"
 if (!dir.exists(output_dir)) stop("Utdatakatalogen finns inte: ", output_dir)
 saveRDS(df, file.path(output_dir, "df_mconlearning.rds"))
 saveRDS(word_long, file.path(output_dir, "word_learning_long.rds"))
