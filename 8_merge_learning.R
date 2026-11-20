@@ -12,7 +12,7 @@ library(tidyr)
 # Skalor som faktiskt skapas i 6_constructingscales.R.
 skalor <- c("hopeforsuccess", "fearoffailure", "learninganxiety",
             "learningboredome", "learningenjoyment", "learninghope",
-            "growthmindset", "metaknowledgeofcognition",
+            "growthmindset", "cverbal", "cdigital", "metaknowledgeofcognition",
             "metaregulationofcognition")
 
 # Kontrollera att varje datakälla har unikt och icke-saknat id. Detta hindrar
