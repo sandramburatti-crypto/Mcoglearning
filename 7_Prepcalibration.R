@@ -146,6 +146,8 @@ items <- c(10, 12, 16, 19, 20, 21, 24, 26, 27, 28)
 confidence_cols <- paste0("p_con_", 1:10)
 correct_cols <- paste0("p_Q", items, "_correct")
 response_cols <- lapply(paste0("p_Q", items), c)
+response_cols[items == 19] <- list("p_Q19_")
+response_cols[items == 20] <- list("p_Q20_")
 
 # Kontrollera kolumner, id och giltiga värden; räkna sedan varje mått.
 # Rätt/fel sätts till NA om ursprungssvaret saknas.
