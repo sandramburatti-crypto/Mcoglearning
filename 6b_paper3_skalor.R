@@ -11,9 +11,10 @@
 
 library(dplyr)
 if (!exists("survey")) stop("Kor 1_readingdata.R forst.")
-# Samma fil som i 1_readingdata.R. Andra sokvagen bara om originalfilen flyttas.
-survey_fil_p3 <- "/safe/data/Buratti/Mcoglearning/data/surveycleaned-260401-n5363.csv"
-if (!file.exists(survey_fil_p3)) stop("Ursprunglig enkatfil saknas: ", survey_fil_p3)
+# Filen lases fran aktuell arbetskatalog, dar skript 1 har last in data.
+survey_fil_p3 <- file.path(getwd(), "surveycleaned-260401-n5363.csv")
+if (!file.exists(survey_fil_p3)) stop("Ursprunglig enkatfil saknas: ", survey_fil_p3,
+  ". Kontrollera arbetskatalogen med getwd() och kor skript 1 forst.")
 survey_original_p3 <- read.csv(survey_fil_p3)
 fixed_items <- paste0("QSS39_", c(1, 2, 4, 6))
 growth_items <- paste0("QSS39_", c(3, 5, 7, 8))
@@ -35,6 +36,25 @@ match_p3 <- match(survey$id, survey_original_p3$id)
 if (anyNA(match_p3)) stop("Vissa id i survey saknas i originalfilen. Kontrollera datakallan.")
 survey$entity_p3 <- score3(survey_original_p3, fixed_items)[match_p3]
 survey$incremental_p3 <- score3(survey_original_p3, growth_items)[match_p3]
+
+# Academic self-concept / learning competency enligt användarens syntax.
+# cverbal: QSS37_1-3; cdigital: QSS37_13-15. Minst 2 av 3 svar.
+# Läses från originalfilen och matchas på id, på samma sätt som mindset.
+verbal_p3 <- paste0("QSS37_", 1:3)
+digital_p3 <- paste0("QSS37_", 13:15)
+concept_items_p3 <- c(verbal_p3, digital_p3)
+missing_concept_p3 <- setdiff(concept_items_p3, names(survey_original_p3))
+if (length(missing_concept_p3)) stop("Saknade QSS37-item: ", paste(missing_concept_p3, collapse = ", "))
+if (!all(vapply(survey_original_p3[concept_items_p3], is.numeric, logical(1))))
+  stop("QSS37-item måste vara numeriska; kontrollera kodning och bortfall.")
+score2_p3 <- function(dat, vars) {
+  z <- as.matrix(dat[vars]); n <- rowSums(!is.na(z)); ans <- rowMeans(z, na.rm = TRUE)
+  ans[n < 2] <- NA_real_; ans
+}
+survey$cverbal <- score2_p3(survey_original_p3, verbal_p3)[match_p3]
+survey$cdigital <- score2_p3(survey_original_p3, digital_p3)[match_p3]
 cat("Paper 3: entity n =", sum(!is.na(survey$entity_p3)),
     "; incremental n =", sum(!is.na(survey$incremental_p3)), "\n")
+cat("Academic self-concept: cverbal n =", sum(!is.na(survey$cverbal)),
+    "; cdigital n =", sum(!is.na(survey$cdigital)), "\n")
 cat("Itemindelning foljer reverseringen i originalskript 6; minst 3 av 4 besvarade per delskala.\n")
