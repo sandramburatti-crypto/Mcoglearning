@@ -12,7 +12,7 @@
 library(dplyr)
 if (!exists("survey")) stop("Kor 1_readingdata.R forst.")
 # Samma fil som i 1_readingdata.R. Andra sokvagen bara om originalfilen flyttas.
-survey_fil_p3 <- "/safe/data/Buratti/Mconlearning/data/surveycleaned-260401-n5363.csv"
+survey_fil_p3 <- "/safe/data/Buratti/Mcoglearning/data/surveycleaned-260401-n5363.csv"
 if (!file.exists(survey_fil_p3)) stop("Ursprunglig enkatfil saknas: ", survey_fil_p3)
 survey_original_p3 <- read.csv(survey_fil_p3)
 fixed_items <- paste0("QSS39_", c(1, 2, 4, 6))
